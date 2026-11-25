@@ -1,9 +1,8 @@
 # SuperTuxKart Docker Server
 
-Run a dedicated SuperTuxKart LAN server with Docker on Linux (`amd64`). Connect
-through the game's LAN lobby or enter the Docker host's address and port `2759`.
-Host networking lets the server respond to LAN discovery on `2757/udp`.
-Gameplay uses `2759/udp` by default.
+Run a dedicated SuperTuxKart server with Docker on Linux (`amd64`). Use LAN
+play by default or enable direct joins on a VPS. Host networking lets the
+server respond to LAN discovery on `2757/udp`. Gameplay uses `2759/udp` by default.
 
 ## Run with Compose
 
@@ -19,6 +18,28 @@ docker compose logs -f supertuxkart
 The server creates a default configuration on first startup. Compose stores
 configuration and generated files in the `stk-data` volume. To upgrade, run
 `docker compose pull` and `docker compose up -d` again.
+
+## Deploy on a VPS
+
+Use a Linux `amd64` VPS with a reachable public IPv4 address. Set
+`PUBLIC_SERVER=1` in `.env` to enable direct-address joins. Use the default
+`<wan-server value="false" />` in the server XML.
+
+```sh
+docker compose pull
+docker compose up -d
+```
+
+Allow inbound `2759/udp` in both the VPS firewall and any provider firewall.
+In SuperTuxKart, choose **Enter server address** and enter your VPS address
+and port, for example `203.0.113.10:2759`. If players will enter just the IP,
+also allow `2757/udp` for port discovery. If your XML sets a custom gameplay
+port, use that port in the firewall and client.
+
+For a private game on the VPS, set `private-server-password` in
+[`server_config.xml`](#edit-the-server-configuration).
+For a VPS deployment with `docker run`, add `-e PUBLIC_SERVER=1`.
+[SuperTuxKart networking guide](https://github.com/supertuxkart/stk-code/blob/1.5/NETWORKING.md)
 
 ## Change the game mode
 

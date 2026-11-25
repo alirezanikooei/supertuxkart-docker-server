@@ -8,6 +8,7 @@ services:
     environment:
       AI_KARTS: "${AI_KARTS:-0}"
       GAME_MODE: "${GAME_MODE:-}"
+      PUBLIC_SERVER: "${PUBLIC_SERVER:-0}"
     restart: unless-stopped
 
 volumes:

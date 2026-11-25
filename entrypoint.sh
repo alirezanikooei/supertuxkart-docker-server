@@ -22,6 +22,15 @@ case "${GAME_MODE:-}" in
         ;;
 esac
 
+case "${PUBLIC_SERVER:-0}" in
+    0) ;;
+    1) server+=(--public-server) ;;
+    *)
+        echo "PUBLIC_SERVER must be 0 or 1." >&2
+        exit 2
+        ;;
+esac
+
 if [[ ! -e "$server_config" ]]; then
     cp /usr/local/share/stk/server_config.example.xml "$server_config"
 fi
