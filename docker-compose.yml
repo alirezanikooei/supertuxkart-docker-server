@@ -1,11 +1,13 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 services:
   supertuxkart:
-    build: .
+    image: ${STK_IMAGE:-ghcr.io/alirezanikooei/supertuxkart-docker-server:latest}
     network_mode: host
     volumes:
       - ${STK_DATA_VOLUME:-stk-data}:/home/stkserver/.config/supertuxkart/config-0.10
     environment:
       AI_KARTS: "${AI_KARTS:-0}"
+      GAME_MODE: "${GAME_MODE:-}"
     restart: unless-stopped
 
 volumes:

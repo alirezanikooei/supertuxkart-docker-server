@@ -31,9 +31,9 @@ jobs:
             --label "org.opencontainers.image.source=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}" \
             --label "org.opencontainers.image.revision=${GITHUB_SHA}" .
 
-      - name: Check LAN discovery
+      - name: Check LAN discovery and game mode
         run: |
-          container=$(docker run --detach --publish 127.0.0.1::2757/udp stk-server:ci)
+          container=$(docker run --detach --env GAME_MODE=soccer --publish 127.0.0.1::2757/udp stk-server:ci)
           cleanup() {
             docker logs "$container"
             docker rm --force "$container" >/dev/null
@@ -70,10 +70,12 @@ jobs:
                   name = response[5:end]
                   # Two player counts precede the advertised gameplay port.
                   game_port = int.from_bytes(response[end + 2:end + 4], "big")
-                  if name == expected_name and game_port == expected_port:
+                  # The mode follows the difficulty byte. The LAN ID for soccer is 6.
+                  game_mode = response[end + 5:end + 6]
+                  if name == expected_name and game_port == expected_port and game_mode == bytes([6]):
                       break
               else:
-                  sys.exit("No discovery response from the SuperTuxKart server")
+                  sys.exit("No discovery response with the expected server settings")
           PY
 
       - name: Push image to GitHub Container Registry

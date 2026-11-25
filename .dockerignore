@@ -2,3 +2,5 @@
 !Dockerfile
 !entrypoint.sh
 !server_config.example.xml
+!LICENSE
+!THIRD_PARTY_NOTICES.md

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 FROM alpine:3.24
 
 RUN apk add --no-cache \
@@ -12,6 +13,7 @@ RUN adduser -D -u 1000 stkserver \
     && chown -R stkserver:stkserver /home/stkserver
 COPY --chmod=0755 entrypoint.sh /usr/local/bin/stk-entrypoint
 COPY server_config.example.xml /usr/local/share/stk/server_config.example.xml
+COPY LICENSE THIRD_PARTY_NOTICES.md /usr/local/share/licenses/supertuxkart-docker-server/
 
 USER stkserver
 WORKDIR /home/stkserver

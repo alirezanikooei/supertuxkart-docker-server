@@ -3,6 +3,7 @@
 /.codex/
 /.env
 /.env.*
+!/.env.example
 /server_config.xml
 /stk_config_data/
 *.log

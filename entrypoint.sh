@@ -1,4 +1,5 @@
 #!/bin/bash
+# SPDX-License-Identifier: GPL-3.0-or-later
 set -euo pipefail
 
 if (( $# > 0 )); then
@@ -7,11 +8,24 @@ fi
 
 umask 077
 server_config="$HOME/.config/supertuxkart/config-0.10/server_config.xml"
+server=(supertuxkart-server "--server-config=$server_config")
+case "${GAME_MODE:-}" in
+    '') ;;
+    race) server+=(--mode=0) ;;
+    time-trial) server+=(--mode=1) ;;
+    soccer) server+=(--mode=3) ;;
+    free-for-all) server+=(--mode=2) ;;
+    capture-the-flag) server+=(--mode=5) ;;
+    *)
+        echo "GAME_MODE must be race, time-trial, soccer, free-for-all, capture-the-flag, or empty." >&2
+        exit 2
+        ;;
+esac
+
 if [[ ! -e "$server_config" ]]; then
     cp /usr/local/share/stk/server_config.example.xml "$server_config"
 fi
 
-server=(supertuxkart-server "--server-config=$server_config")
 ai_karts=${AI_KARTS:-0}
 if [[ "$ai_karts" == 0 ]]; then
     exec "${server[@]}"
