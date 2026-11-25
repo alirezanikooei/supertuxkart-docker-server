@@ -4,5 +4,6 @@
     <server-port value="2759" />
     <wan-server value="false" />
     <server-mode value="3" />
+    <server-configurable value="true" />
     <private-server-password value="" />
 </server-config>

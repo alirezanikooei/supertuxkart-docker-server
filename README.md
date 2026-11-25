@@ -24,6 +24,23 @@ configuration and generated files in the `stk-data` volume. To upgrade, run
 
 You can change the game mode with the published image already on your host.
 
+### Switch modes in the lobby
+
+New servers start in Normal race mode with lobby configuration enabled.
+While the lobby is waiting to start, the server owner can open
+**Configuration** and choose a mode without restarting the server. The
+selection lasts for the current server session. Lobby configuration requires
+a lobby owner and a mode outside Grand Prix.
+
+To enable it on an existing server, [stop the server and edit its configuration](#edit-the-server-configuration).
+Add or update this setting in `server_config.xml`, then start the server again.
+
+```xml
+<server-configurable value="true" />
+```
+
+[SuperTuxKart networking guide](https://github.com/supertuxkart/stk-code/blob/1.5/NETWORKING.md)
+
 ### Set the default in `.env`
 
 With an image that supports `GAME_MODE`, copy `.env.example` to `.env` if you
@@ -56,21 +73,6 @@ server is stopped. This example sets soccer as the default.
 
 Start the server again with `docker compose up -d --pull never supertuxkart`.
 This also applies any change to `GAME_MODE` in `.env`.
-
-### Switch modes in the lobby
-
-To let the server owner change modes between races without restarting the
-server, set this option in `server_config.xml` while the server is stopped.
-Start the server again once to enable it.
-
-```xml
-<server-configurable value="true" />
-```
-
-While the lobby is waiting to start, the server owner can open
-**Configuration** and choose a mode. This works on servers with a lobby owner
-outside Grand Prix mode. The lobby selection lasts until the server restarts.
-[SuperTuxKart networking guide](https://github.com/supertuxkart/stk-code/blob/1.5/NETWORKING.md)
 
 ## Edit the server configuration
 
