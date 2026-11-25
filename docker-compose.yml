@@ -1,0 +1,12 @@
+services:
+  supertuxkart:
+    build: .
+    network_mode: host
+    volumes:
+      - ${STK_DATA_VOLUME:-stk-data}:/home/stkserver/.config/supertuxkart/config-0.10
+    environment:
+      AI_KARTS: "${AI_KARTS:-0}"
+    restart: unless-stopped
+
+volumes:
+  stk-data:

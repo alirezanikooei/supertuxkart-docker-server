@@ -1,0 +1,9 @@
+/.agents/
+/.aws/
+/.codex/
+/.env
+/.env.*
+/server_config.xml
+/stk_config_data/
+*.log
+*.log.*

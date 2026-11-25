@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<server-config version="6">
+    <server-name value="SuperTuxKart Server" />
+    <server-port value="2759" />
+    <wan-server value="false" />
+    <server-mode value="3" />
+    <private-server-password value="" />
+</server-config>
